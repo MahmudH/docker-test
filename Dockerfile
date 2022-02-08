@@ -1,10 +1,11 @@
-FROM ubuntu:latest
+FROM node:latest
 
-ENV DEBIAN_FRONTEND noninteractive
+WORKDIR /app
 
-RUN apt-get -y update
+COPY ["package.json", "package-lock.json*", "./"]
 
-RUN apt-get install -y apache2 && apt-get clean
+RUN npm install
 
-EXPOSE 80
-CMD apachectl -D FOREGROUND
+COPY . .
+
+CMD [ "node", "app.js" ]
